@@ -1,0 +1,29 @@
+server:
+  port: 9191
+
+spring:
+  application:
+    name: CLOUD-GATEWAY
+  cloud:
+    gateway:
+      routes:
+        - id: MOVIE-CATALOG-SERVICE
+          uri: lb://MOVIE-CATALOG-SERVICE
+          predicates:
+            - Path=/catalog/**
+        - id: MOVIE-INFO-SERVICE
+          uri: lb://MOVIE-INFO-SERVICE
+          predicates:
+            - Path=/movies/**
+        - id: RATING-DATA-SERVICE
+          uri: lb://RATING-DATA-SERVICE
+          predicates:
+            - Path=/rating-data/**
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    hostname: localhost
