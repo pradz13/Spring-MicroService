@@ -28,12 +28,12 @@ public class MovieCatalogResource {
     public List<MovieCatalogItem> getMovieCatalog() {
         List<String> movieIds = List.of("1234", "2456", "6789");
         return movieIds.stream().map(movieId -> {
-            Movie movie = restTemplate.getForObject("http://localhost:8082/movies/" + movieId, Movie.class);
+            Movie movie = restTemplate.getForObject("http://MOVIE-INFO-SERVICE/movies/" + movieId, Movie.class);
 
             Rating rating = webClientBuilder
                     .build()
                     .get()
-                    .uri("http://localhost:8083/rating-data/" +  movieId)
+                    .uri("http://RATING-DATA-SERVICE/rating-data/" +  movieId)
                     .retrieve()
                     .bodyToMono(Rating.class)
                     .block();
